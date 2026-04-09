@@ -1,0 +1,9 @@
+{
+  "staging": {
+    "username": "eep-db-staging",
+    "password": "MySql@123",
+    "database": "wayshub",
+    "host": "database",
+    "dialect": "mysql"
+  }
+}
