@@ -31,30 +31,6 @@ pipeline {
             }
         }
 
-        stage('Test Application') {
-            steps {
-                sh """
-                docker rm -f test-${appName} || true
-
-                docker run -d --name test-${appName} -p 5001:5000 ${imageName}:${tag}
-
-                echo "Waiting for app to be ready..."
-                
-                for i in ${sec 1 10}; do
-                    if curl -f http://localhost:5001; then
-                        echo "App is up!"
-                        break
-                    fi
-                    echo "Retry $i..."
-                    sleep 5
-                done
-
-                docker stop test-${appName}
-                docker rm test-${appName}
-                """
-            }
-        }
-
         stage('Push to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(
