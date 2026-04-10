@@ -33,7 +33,7 @@ pipeline {
 
         stage('Test Application') {
             steps {
-                sh '''
+                sh """
                 docker rm -f test-${appName} || true
 
                 docker run -d --name test-${appName} -p 5001:5000 ${imageName}:${tag}
@@ -51,7 +51,7 @@ pipeline {
 
                 docker stop test-${appName}
                 docker rm test-${appName}
-                '''
+                """
             }
         }
 
