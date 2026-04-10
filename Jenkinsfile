@@ -1,7 +1,7 @@
 def branch = "main"
 def repo = "https://github.com/EkoEdyP/wayshub-backend.git"
 def appName = "wayshub-backend"
-def imageName = "kelompok2/wayshub-backend"
+def imageName = "echoedyp/wayshub-backend"
 def tag = "latest"
 
 def server = "eep@103.197.189.7"
