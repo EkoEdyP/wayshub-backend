@@ -4,7 +4,7 @@ def appName = "wayshub-backend"
 def imageName = "kelompok2/wayshub-backend"
 def tag = "latest"
 
-def server = "eep-jenkins@103.197.189.7"
+def server = "eep@103.197.189.7"
 def directory = "/home/eep-jenkins/wayshub-backend"
 
 def sshCred = "eep-jenkins-id"
