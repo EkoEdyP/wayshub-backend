@@ -35,9 +35,9 @@ pipeline {
             steps {
                 sh """
                 docker rm -f test-wayshub-backend || true
-                docker run -d --name test-${appName} -p 5000:5000 ${imageName}:${tag}
+                docker run -d --name test-${appName} -p 5001:5000 ${imageName}:${tag}
                 sleep 10
-                curl -f http://localhost:5000 || exit 1
+                curl -f http://localhost:5001 || exit 1
                 docker stop test-${appName}
                 docker rm test-${appName}
                 """
