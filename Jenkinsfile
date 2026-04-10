@@ -34,6 +34,7 @@ pipeline {
         stage('Test Application') {
             steps {
                 sh """
+                docker rm -f test-wayshub-backend || true
                 docker run -d --name test-${appName} -p 5000:5000 ${imageName}:${tag}
                 sleep 10
                 curl -f http://localhost:5000 || exit 1
