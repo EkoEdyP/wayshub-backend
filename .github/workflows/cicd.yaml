@@ -10,7 +10,7 @@ on:
     branches:
       - main
   workflow_dispatch:
-    
+
 env:
   IMAGE_NAME: wayshub-backend
   IMAGE_TAG: latest
@@ -24,14 +24,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Login DockerHub
+      # 2. Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Run tests
+      - name: Run tests
+        run: npm test
+
+      # ❗ Kalau test gagal → step bawah gak jalan
+
+      # 5. Login DockerHub
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3. Build & Push
+      # 6. Build & Push
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
