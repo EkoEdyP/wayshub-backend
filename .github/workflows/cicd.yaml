@@ -71,4 +71,52 @@ jobs:
             # Stop dan hapus container lama
             docker compose down
             # Recreate container dengan image terbaru
-            docker compose up -d --build            
+            docker compose up -d --build
+            
+      # ✅ Notify Discord - SUCCESS
+      - name: Notify Discord (Success)
+        if: always() && success()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{
+            \"content\": \"✅ Deploy SUCCESS 🚀\",
+            \"embeds\": [{
+              \"title\": \"WaysHub Backend Deployed\",
+              \"description\": \"Deployment berhasil ke server 🎉\",
+              \"color\": 3066993,
+              \"fields\": [
+                {\"name\": \"Repository\", \"value\": \"${{ github.repository }}\"},
+                {\"name\": \"Branch\", \"value\": \"${{ github.ref_name }}\"},
+                {\"name\": \"Commit\", \"value\": \"${{ github.sha }}\"},
+                {\"name\": \"Author\", \"value\": \"${{ github.actor }}\"}
+              ],
+              \"footer\": {
+                \"text\": \"GitHub Actions\"
+              }
+            }]
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      # ❌ Notify Discord - FAILED
+      - name: Notify Discord (Failed)
+        if: always() && failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{
+            \"content\": \"❌ Deploy FAILED\",
+            \"embeds\": [{
+              \"title\": \"WaysHub Deployment Failed\",
+              \"description\": \"Cek GitHub Actions untuk detail error ⚠️\",
+              \"color\": 15158332,
+              \"fields\": [
+                {\"name\": \"Repository\", \"value\": \"${{ github.repository }}\"},
+                {\"name\": \"Branch\", \"value\": \"${{ github.ref_name }}\"},
+                {\"name\": \"Triggered by\", \"value\": \"${{ github.actor }}\"},
+                {\"name\": \"Run ID\", \"value\": \"${{ github.run_id }}\"}
+              ],
+              \"footer\": {
+                \"text\": \"GitHub Actions\"
+              }
+            }]
+          }" \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}                        
