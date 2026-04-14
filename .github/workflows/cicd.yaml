@@ -108,7 +108,7 @@ jobs:
           -d "{
             \"content\": \"❌ Deploy FAILED\",
             \"embeds\": [{
-              \"title\": \"WaysHub Deployment Failed\",
+              \"title\": \"WaysHub Backend Deployment Failed\",
               \"description\": \"Cek GitHub Actions untuk detail error ⚠️\",
               \"color\": 15158332,
               \"fields\": [
